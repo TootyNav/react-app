@@ -1,11 +1,9 @@
-import { MouseEvent } from "react";
+import { useState } from "react";
 
 function ListGroup() {
   const items = ["New York", "London", "Manchester", "Bangkok"];
-  let selectedIndex = 0;
 
-  //event handler
-  const handleClick = (event: MouseEvent) => console.log(MouseEvent);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   return (
     <>
@@ -19,7 +17,9 @@ function ListGroup() {
                 ? "active list-group-item"
                 : "list-group-item"
             }
-            onClick={handleClick}
+            onClick={() => {
+              setSelectedIndex(index);
+            }}
           >
             {item}
           </li>
