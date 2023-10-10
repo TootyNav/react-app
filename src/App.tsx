@@ -1,16 +1,33 @@
-import Alert from "./components/Alert";
+import Button from "./components/Button";
 
 function App() {
   return (
     <div>
-      <Alert>
-        <strong>Hello</strong> World
-      </Alert>
+      <Button
+        colour="danger"
+        OnClick={() => {
+          console.log("Clicked");
+        }}
+      >
+        Click Me
+      </Button>
     </div>
   );
 }
 
 export default App;
+
+// import Alert from "./components/Alert";
+
+// function App() {
+//   return (
+//     <div>
+//       <Alert>
+//         <strong>Hello</strong> World
+//       </Alert>
+//     </div>
+//   );
+// }
 
 //import ListGroup from "./components/ListGroup";
 
