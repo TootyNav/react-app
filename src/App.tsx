@@ -3,19 +3,19 @@ import Alert from "./components/Alert";
 import Button from "./components/Button";
 
 function App() {
-  // const handleButtonClick = () => {
-  //   return (
-  //     <div>
-  //       <Alert>Hi</Alert>
-  //     </div>
-  //   );
-  // };
-
   const [alertVisible, SetAlertVisible] = useState(false);
 
   return (
     <div>
-      {alertVisible && <Alert>Hi</Alert>}
+      {alertVisible && (
+        <Alert
+          OnClosed={() => {
+            SetAlertVisible(false);
+          }}
+        >
+          Hi
+        </Alert>
+      )}
       <Button
         colour="danger"
         OnClick={() => {
