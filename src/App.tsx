@@ -2,8 +2,10 @@ import { useState } from "react";
 import ExpenseList from "./ExpenseTracker/components/ExpenseList";
 import ExpenseTracker from "./ExpenseTracker/components/ExpenseTrackerOld";
 import Form from "./components/Form";
+import ExpenseFilter from "./ExpenseTracker/components/ExpenseFilter";
 
 function App() {
+  const [selectedCategory, setselectedCategory] = useState("");
   const [expenses, setExpenses] = useState([
     {
       id: 0,
@@ -47,9 +49,18 @@ function App() {
     setExpenses([...expenses.filter((x) => x.id !== id)]);
   };
 
+  const visibleList = selectedCategory
+    ? expenses.filter((x) => x.category === selectedCategory)
+    : expenses;
+
   return (
     <>
-      <ExpenseList expenses={expenses} onDelete={handleDelete}></ExpenseList>
+      <div className="mb-3">
+        <ExpenseFilter
+          onSelectCategory={(category) => setselectedCategory(category)}
+        ></ExpenseFilter>
+      </div>
+      <ExpenseList expenses={visibleList} onDelete={handleDelete}></ExpenseList>
     </>
   );
 }
