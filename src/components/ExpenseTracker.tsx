@@ -18,12 +18,10 @@ const ExpenseTracker = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    reset,
   } = useForm<formData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
-    console.log(data.amount);
-
     setExpenseArrayState([
       ...expenseArrayState,
       {
@@ -32,6 +30,8 @@ const ExpenseTracker = () => {
         category: data.category,
       },
     ]);
+
+    reset();
   };
 
   const expenseArray: formData[] = [
