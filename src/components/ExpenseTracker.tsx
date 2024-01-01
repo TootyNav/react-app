@@ -1,7 +1,7 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const schema = z.object({
   description: z
@@ -34,16 +34,50 @@ const ExpenseTracker = () => {
     reset();
   };
 
+  //next page
+
   const expenseArray: formData[] = [
     {
       description: "Milk",
-      amount: 2,
+      amount: 5,
       category: "Groceries",
+    },
+    {
+      description: "Eggs",
+      amount: 10,
+      category: "Groceries",
+    },
+    {
+      description: "Gas",
+      amount: 200,
+      category: "Utilities",
+    },
+    {
+      description: "Water",
+      amount: 90,
+      category: "Utilities",
+    },
+    {
+      description: "Movies",
+      amount: 15,
+      category: "Entertainment",
+    },
+    {
+      description: "Games",
+      amount: 70,
+      category: "Entertainment",
     },
   ];
   const [expenseArrayState, setExpenseArrayState] =
     useState<formData[]>(expenseArray);
 
+  const filterCategory = useRef<HTMLSelectElement>(null);
+  const handleSelectChange = () => {
+    if (filterCategory.current !== null) {
+      const selectedValue = filterCategory.current.value;
+      console.log(selectedValue);
+    }
+  };
   return (
     <>
       <form className="mb-5" onSubmit={handleSubmit(onSubmit)}>
@@ -102,6 +136,18 @@ const ExpenseTracker = () => {
       </form>
 
       <div>
+        <select
+          id="category2"
+          className="form-select form-control mb-3 "
+          ref={filterCategory}
+          onChange={handleSelectChange}
+        >
+          <option>All categories</option>
+          <option>Groceries</option>
+          <option>Utilities</option>
+          <option>Entertainment</option>
+        </select>
+
         <table className="table table-bordered ">
           <thead>
             <tr>
