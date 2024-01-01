@@ -44,11 +44,9 @@ const ExpenseTracker = () => {
   const [expenseArrayState, setExpenseArrayState] =
     useState<formData[]>(expenseArray);
 
-  // console.log(expenseArrayState);
-
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="mb-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">
             Description
@@ -104,7 +102,7 @@ const ExpenseTracker = () => {
       </form>
 
       <div>
-        <table className="table">
+        <table className="table table-bordered ">
           <thead>
             <tr>
               <th scope="col">Description</th>
@@ -119,6 +117,7 @@ const ExpenseTracker = () => {
                 <td>{expense.description}</td>
                 <td>{expense.amount}</td>
                 <td>{expense.category}</td>
+                <td>Delete</td>
               </tr>
             ))}
           </tbody>
