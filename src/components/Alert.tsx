@@ -24,3 +24,33 @@ const Alert = ({ children, OnClosed }: Props) => {
 };
 
 export default Alert;
+
+// add this in app
+//Click button to show alert and close alert
+// function App() {
+//   const [alertVisible, SetAlertVisible] = useState(false);
+
+//   return (
+//     <div>
+//       {alertVisible && (
+//         <Alert
+//           OnClosed={() => {
+//             SetAlertVisible(false);
+//           }}
+//         >
+//           Hi
+//         </Alert>
+//       )}
+//       <Button
+//         colour="danger"
+//         OnClick={() => {
+//           SetAlertVisible(true);
+//         }}
+//       >
+//         Click Me
+//       </Button>
+//     </div>
+//   );
+// }
+
+// export default App;

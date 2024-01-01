@@ -1,73 +1,57 @@
-import ExpenseTracker from "./components/ExpenseTracker";
+import { useState } from "react";
+import ExpenseList from "./ExpenseTracker/components/ExpenseList";
+import ExpenseTracker from "./ExpenseTracker/components/ExpenseTrackerOld";
 import Form from "./components/Form";
 
 function App() {
+  const [expenses, setExpenses] = useState([
+    {
+      id: 0,
+      description: "Milk",
+      amount: 5,
+      category: "Groceries",
+    },
+    {
+      id: 1,
+      description: "Eggs",
+      amount: 10,
+      category: "Groceries",
+    },
+    {
+      id: 2,
+      description: "Gas",
+      amount: 200,
+      category: "Utilities",
+    },
+    {
+      id: 3,
+      description: "Water",
+      amount: 90,
+      category: "Utilities",
+    },
+    {
+      id: 4,
+      description: "Movies",
+      amount: 15,
+      category: "Entertainment",
+    },
+    {
+      id: 5,
+      description: "Games",
+      amount: 70,
+      category: "Entertainment",
+    },
+  ]);
+
+  const handleDelete = (id: number) => {
+    setExpenses([...expenses.filter((x) => x.id !== id)]);
+  };
+
   return (
     <>
-      {/* <Form></Form> */}
-      <ExpenseTracker></ExpenseTracker>
+      <ExpenseList expenses={expenses} onDelete={handleDelete}></ExpenseList>
     </>
   );
 }
 
 export default App;
-
-//Click button to show alert and close alert
-// function App() {
-//   const [alertVisible, SetAlertVisible] = useState(false);
-
-//   return (
-//     <div>
-//       {alertVisible && (
-//         <Alert
-//           OnClosed={() => {
-//             SetAlertVisible(false);
-//           }}
-//         >
-//           Hi
-//         </Alert>
-//       )}
-//       <Button
-//         colour="danger"
-//         OnClick={() => {
-//           SetAlertVisible(true);
-//         }}
-//       >
-//         Click Me
-//       </Button>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-//Display list and click on list
-// import Alert from "./components/Alert";
-
-// function App() {
-//   return (
-//     <div>
-//       <Alert>
-//         <strong>Hello</strong> World
-//       </Alert>
-//     </div>
-//   );
-// }
-
-//import ListGroup from "./components/ListGroup";
-
-// function App() {
-//   const items = ["New York", "London", "Manchester", "Bangkok"];
-
-//   const handleSelectItem = (item: string) => console.log(item);
-
-//   return (
-//     <div>
-//       <ListGroup
-//         items={items}
-//         heading="List of Cities"
-//         onSelectItem={handleSelectItem}
-//       ></ListGroup>
-//     </div>
-//   );
-// }
