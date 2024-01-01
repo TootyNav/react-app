@@ -54,12 +54,18 @@ function App() {
 
   return (
     <>
-      <ExpenseForm></ExpenseForm>
+      <ExpenseForm
+        onSubmit={(expense) =>
+          setExpenses([...expenses, { ...expense, id: expenses.length + 1 }])
+        }
+      ></ExpenseForm>
+
       <div className="mb-3">
         <ExpenseFilter
           onSelectCategory={(category) => setselectedCategory(category)}
         ></ExpenseFilter>
       </div>
+
       <ExpenseList expenses={visibleList} onDelete={handleDelete}></ExpenseList>
     </>
   );

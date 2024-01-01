@@ -2,10 +2,8 @@ import categories from "./Categories";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Message from "../Message";
 
 const schema = z.object({
-  id: z.number(),
   description: z
     .string()
     .min(3, { message: "Description must be at least 3 charactors." })
@@ -21,7 +19,10 @@ const schema = z.object({
 
 type expenseFormData = z.infer<typeof schema>;
 
-const ExpenseForm = () => {
+interface Props {
+  onSubmit: (data: expenseFormData) => void;
+}
+const ExpenseForm = ({ onSubmit }: Props) => {
   const {
     register,
     handleSubmit,
@@ -30,7 +31,13 @@ const ExpenseForm = () => {
   } = useForm<expenseFormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form className="mb-5" onSubmit={handleSubmit((data) => console.log(data))}>
+    <form
+      className="mb-5"
+      onSubmit={handleSubmit((data) => {
+        onSubmit(data);
+        reset();
+      })}
+    >
       <div className="mb-3">
         <label htmlFor="description" className="form-label">
           Description
