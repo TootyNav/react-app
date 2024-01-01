@@ -1,9 +1,10 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const schema = z.object({
+  id: z.number(),
   description: z
     .string()
     .min(3, { message: "Description must be at least 3 charactors." }),
@@ -25,6 +26,7 @@ const ExpenseTracker = () => {
     setExpenseArrayState([
       ...expenseArrayState,
       {
+        id: data.id,
         description: data.description,
         amount: data.amount,
         category: data.category,
@@ -38,31 +40,37 @@ const ExpenseTracker = () => {
 
   const expenseArray: formData[] = [
     {
+      id: 0,
       description: "Milk",
       amount: 5,
       category: "Groceries",
     },
     {
+      id: 1,
       description: "Eggs",
       amount: 10,
       category: "Groceries",
     },
     {
+      id: 2,
       description: "Gas",
       amount: 200,
       category: "Utilities",
     },
     {
+      id: 3,
       description: "Water",
       amount: 90,
       category: "Utilities",
     },
     {
+      id: 4,
       description: "Movies",
       amount: 15,
       category: "Entertainment",
     },
     {
+      id: 5,
       description: "Games",
       amount: 70,
       category: "Entertainment",
@@ -71,13 +79,12 @@ const ExpenseTracker = () => {
   const [expenseArrayState, setExpenseArrayState] =
     useState<formData[]>(expenseArray);
 
-  const filterCategory = useRef<HTMLSelectElement>(null);
-  const handleSelectChange = () => {
-    if (filterCategory.current !== null) {
-      const selectedValue = filterCategory.current.value;
-      console.log(selectedValue);
-    }
+  const [filterCategory, setfilterCategory] = useState("");
+
+  const handleDelete = (id: number, category: string) => {
+    setExpenseArrayState([...expenseArrayState.filter((x) => x.id !== id)]);
   };
+
   return (
     <>
       <form className="mb-5" onSubmit={handleSubmit(onSubmit)}>
@@ -139,10 +146,11 @@ const ExpenseTracker = () => {
         <select
           id="category2"
           className="form-select form-control mb-3 "
-          ref={filterCategory}
-          onChange={handleSelectChange}
+          onChange={(event) => {
+            setfilterCategory(event.target.value);
+          }}
         >
-          <option>All categories</option>
+          <option value="default">All categories</option>
           <option>Groceries</option>
           <option>Utilities</option>
           <option>Entertainment</option>
@@ -158,14 +166,33 @@ const ExpenseTracker = () => {
             </tr>
           </thead>
           <tbody>
-            {expenseArrayState.map((expense, index) => (
-              <tr key={index}>
-                <td>{expense.description}</td>
-                <td>{expense.amount}</td>
-                <td>{expense.category}</td>
-                <td>Delete</td>
-              </tr>
-            ))}
+            {/* {filterCategory == "All categories" &&
+              expenseArrayState.map((expense, index) => (
+                <tr key={index}>
+                  <td>{expense.description}</td>
+                  <td>{expense.amount}</td>
+                  <td>{expense.category}</td>
+                  <td>Delete</td>
+                </tr>
+              ))} */}
+            {expenseArrayState
+              .filter((x) => x.category === filterCategory)
+              .map((expense, index, a) => (
+                <tr key={index}>
+                  <td>{expense.description}</td>
+                  <td>{expense.amount}</td>
+                  <td>{expense.category}</td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(expense.id, expense.category)}
+                      className="btn btn-danger "
+                      defaultValue={index}
+                    >
+                      DELETE
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
